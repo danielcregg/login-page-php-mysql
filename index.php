@@ -37,8 +37,13 @@ if( isset($_SESSION['user_id']) ){
 	<?php if( !empty($user) ): ?>
 
 		<br />Welcome <?= $user['email']; ?> 
-		<br /><br />You are successfully logged in!
-		<br /><br />
+		<br/><br />You are successfully logged in!
+		<br/><br/>
+
+		<!-- Put your index.html content in here... -->
+		<h1> Put your index.html content in here...</h1>
+
+		<br><br><br><br><br>
 		<a href="logout.php">Logout?</a>
 
 	<?php else: ?>
