@@ -33,8 +33,7 @@ if( isset($_SESSION['user_id']) ){
 		if (!empty($user)) {
     			header('Location: home.php');
 		} else {
-    			echo '<h1>Please Login or Register</h1>';
-    			echo '<a href="login.php">Login</a> or <a href="register.php">Register</a>';
+    			echo '<h1>Please <a href="login.php">Login</a> or <a href="register.php">Register</a></h1>';
 		}
 	?>
 </body>
