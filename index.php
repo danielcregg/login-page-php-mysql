@@ -24,35 +24,18 @@ if( isset($_SESSION['user_id']) ){
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Welcome to your Web App</title>
-	<link rel="stylesheet" type="text/css" href="assets/css/style.css">
-	<link href='http://fonts.googleapis.com/css?family=Comfortaa' rel='stylesheet' type='text/css'>
+	<title>Login Page</title>
 </head>
 <body>
+	<h1>Your App Name OR Logo</h1>
 
-	<div class="header">
-		<a href="/">Your App Name</a>
-	</div>
-
-	<?php if( !empty($user) ): ?>
-
-		<br />Welcome <?= $user['email']; ?> 
-		<br/><br />You are successfully logged in!
-		<br/><br/>
-
-		<!-- Put your index.html content in here... -->
-		<h1> Put your index.html content in here...</h1>
-
-		<br><br><br><br><br>
-		<a href="logout.php">Logout?</a>
-
-	<?php else: ?>
-
-		<h1>Please Login or Register</h1>
-		<a href="login.php">Login</a> or
-		<a href="register.php">Register</a>
-
-	<?php endif; ?>
-
+	<?php 
+		if (!empty($user)) {
+    			header('Location: home.php');
+		} else {
+    			echo '<h1>Please Login or Register</h1>';
+    			echo '<a href="login.php">Login</a> or <a href="register.php">Register</a>';
+		}
+	?>
 </body>
 </html>
