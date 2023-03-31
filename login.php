@@ -17,17 +17,14 @@ if(!empty($_POST['email']) && !empty($_POST['password'])):
 
 	$message = '';
 
-	if(count($results) > 0 && password_verify($_POST['password'], $results['password']) ){
-
-		$_SESSION['user_id'] = $results['id'];
-		header('Location: home.php');
-
-	} else {
-		$message = 'Sorry, those credentials do not match';
-	}
+if ($results === false || count($results) == 0 || !password_verify($_POST['password'], $results['password'])) {
+        $message = 'Sorry, those credentials do not match';
+    } else {
+        $_SESSION['user_id'] = $results['id'];
+        header('Location: home.php');
+    }
 
 endif;
-
 ?>
 
 <!DOCTYPE html>
@@ -39,9 +36,7 @@ endif;
 
 	<h1>Your App Name OR Logo</h1>
 
-	<?php if(!empty($message)): ?>
-		<p><?= $message ?></p>
-	<?php endif; ?>
+	
 
 	<h1>Login</h1>
 
@@ -54,5 +49,8 @@ endif;
 
 	</form>
 	<span>or <a href="register.php">register here</a></span>
+<?php if(!empty($message)): ?>
+		<p><?= $message ?></p>
+	<?php endif; ?>
 </body>
 </html>
