@@ -37,9 +37,7 @@ endif;
 <body>
 
 	<h1>Your App Name OR Logo</h1>
-	<?php if(!empty($message)): ?>
-		<p><?= $message ?></p>
-	<?php endif; ?>
+	
 
 	<h1>Register</h1>
 	
@@ -52,5 +50,14 @@ endif;
 		<input type="submit">
 	</form>
 	<span>or <a href="login.php">login here</a></span>
+	<?php
+		if (!empty($message)) {
+    			echo "<p>" . $message . "</p>";
+		}
+		if ($message == "Successfully created new user") {
+    			echo "<p>Redirecting to Login Page...</p>";
+    			header("Refresh: 3; URL=login.php");
+		}	
+	?>
 </body>
 </html>
