@@ -33,21 +33,16 @@ endif;
 <html>
 <head>
 	<title>Register Below</title>
-	<link rel="stylesheet" type="text/css" href="assets/css/style.css">
-	<link href='http://fonts.googleapis.com/css?family=Comfortaa' rel='stylesheet' type='text/css'>
 </head>
 <body>
 
-	<div class="header">
-		<a href="/">Your App Name</a>
-	</div>
-
+	<h1>Your App Name OR Logo</h1>
 	<?php if(!empty($message)): ?>
 		<p><?= $message ?></p>
 	<?php endif; ?>
 
 	<h1>Register</h1>
-	<span>or <a href="login.php">login here</a></span>
+	
 
 	<form action="register.php" method="POST">
 		
@@ -55,8 +50,7 @@ endif;
 		<input type="password" placeholder="and password" name="password">
 		<input type="password" placeholder="confirm password" name="confirm_password">
 		<input type="submit">
-
 	</form>
-
+	<span>or <a href="login.php">login here</a></span>
 </body>
 </html>
