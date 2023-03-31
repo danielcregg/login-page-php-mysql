@@ -3,7 +3,7 @@
 session_start();
 
 if( isset($_SESSION['user_id']) ){
-	header("Location: /");
+	header('Location: home.php');
 }
 
 require 'database.php';
@@ -20,7 +20,7 @@ if(!empty($_POST['email']) && !empty($_POST['password'])):
 	if(count($results) > 0 && password_verify($_POST['password'], $results['password']) ){
 
 		$_SESSION['user_id'] = $results['id'];
-		header("Location: /");
+		header('Location: home.php');
 
 	} else {
 		$message = 'Sorry, those credentials do not match';
@@ -34,21 +34,16 @@ endif;
 <html>
 <head>
 	<title>Login Below</title>
-	<link rel="stylesheet" type="text/css" href="assets/css/style.css">
-	<link href='http://fonts.googleapis.com/css?family=Comfortaa' rel='stylesheet' type='text/css'>
 </head>
 <body>
 
-	<div class="header">
-		<a href="/">Your App Name</a>
-	</div>
+	<h1>Your App Name OR Logo</h1>
 
 	<?php if(!empty($message)): ?>
 		<p><?= $message ?></p>
 	<?php endif; ?>
 
 	<h1>Login</h1>
-	<span>or <a href="register.php">register here</a></span>
 
 	<form action="login.php" method="POST">
 		
@@ -58,6 +53,6 @@ endif;
 		<input type="submit">
 
 	</form>
-
+	<span>or <a href="register.php">register here</a></span>
 </body>
 </html>
