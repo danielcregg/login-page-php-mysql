@@ -1,19 +1,104 @@
-# php-login-script
-This is a simple PHP login script using PHP, PDO, and MySQL
+# Add a Login Page to your website via PHP and MySQL Login System 
 
-1.	SSH into your LAMP server 
-2.	Download my coding example from GitHub to /var/www/html/login (All one command below): 
-sudo rm -rf /var/www/html/login;sudo git clone https://github.com/danielcregg/php-login-script.git /var/www/html/login
-3.	Create a new DB called auth (All one command below):
-sudo mysql -u root -Bse "CREATE DATABASE IF NOT EXISTS auth;CREATE USER IF NOT EXISTS newuser@localhost IDENTIFIED BY 'password';GRANT ALL PRIVILEGES ON auth.* TO newuser@localhost;FLUSH PRIVILEGES;";
-4.	Create a user's table to store users:
-sudo mysql -u root auth < /var/www/html/login/database.sql
-5. Install mysql php module:
-sudo apt install php-mysql
-6.	Go to browser and open YourIP/login
-7.	Merge the contents of your index.php file into the index.php file in the login folder.
-8.	Copy the contents of the login folder to your hosted directory and delete the login folder: 
-sudo cp -R /var/www/html/login/* /var/www/html/;sudo rm -rf /var/www/html/login
-9.	Find YourIP by running the following command in the terminal: 
-sudo curl ifconfig.co
-10.	Open your webpage in a browser and text your new login page. 
+1. SSH into your LAMP server  
+
+2. Create a new DB called auth which will store the user table. This command has no output. 
+
+   ```bash
+   sudo mysql -u root -Bse "CREATE DATABASE IF NOT EXISTS auth;"
+   ```
+
+3. Create a new user called newuser and grant all privileges on all DBs. This command has no output. 
+
+   ```bash
+   sudo mysql -u root -Bse "CREATE USER IF NOT EXISTS admin@localhost IDENTIFIED BY 'password';GRANT ALL PRIVILEGES ON *.* TO admin@localhost;FLUSH PRIVILEGES;"
+   ```
+
+4. Remove any old login and download my login code example from GitHub into /var/www/html/login:  
+
+   ```bash
+   sudo rm -rf /var/www/html/login 
+   sudo git clone https://github.com/danielcregg/php-login-script.git /var/www/html/login
+   ```
+
+5. Create a user's table to store users: 
+
+   ```bash
+   sudo mysql -u root auth < /var/www/html/login/database.sql
+   ```
+
+6. Install required PHP module:  
+
+   ```bash
+   sudo apt -y install php-mysql
+   ```
+
+7. Restart Apache to pick up changes: 
+
+   ```bash
+   sudo service apache2 restart
+   ```
+
+8. Check your /var/www/html folder. Make sure you have an index.php file in there. If you have an index.html file rename it to index.php. If you have both then delete index.html.  
+
+9. Copy the contents of the login folder to your hosted directory and delete the login folder: 
+
+   ```bash
+   sudo mv /var/www/html/index.php /var/www/html/home.php
+   ```
+
+10. Add a logout button to the footer of the home.php page 
+
+    ```bash
+    sudo sed -i '/<\/body>/i\    <footer>\n      <a href="logout.php" style="font-size: 18px; color: red; text-decoration: none;">Logout</a>\n    </footer>' /var/www/html/home.php
+    ```
+
+11. Copy contents of login folder to /var/www/html 
+
+    ```bash
+    sudo cp -R /var/www/html/login/* /var/www/html/
+    ```
+
+12. Remove empty login folder 
+
+    ```bash
+    sudo rm -rf /var/www/html/login
+    ```
+
+13. Restart apache to pick up changes. 
+
+    ```bash
+    sudo service apache2 restart
+    ```
+
+14. Restart mysql to pick up change to database. 
+
+    ```bash
+    sudo service mysql restart
+    ```
+
+15. Find YourIP by running the following command in the terminal: 
+
+    ```bash
+    dig +short myip.opendns.com @resolver1.opendns.com
+    ```
+
+16. Open a browser and put your IP in a new tab. You should see a login page. Register and log in. You should get you your home page (your old index.php page).   
+
+17. Install phpMyAdmin – Copy all following code and run 
+
+    ```bash
+    sudo mysql -Bse "CREATE DATABASE IF NOT EXISTS auth;CREATE USER IF NOT EXISTS admin@localhost IDENTIFIED BY 'password';GRANT ALL PRIVILEGES ON *.* TO admin@localhost;FLUSH PRIVILEGES;" && 
+    sudo debconf-set-selections <<< "phpmyadmin phpmyadmin/reconfigure-webserver multiselect apache2" # Select Web Server && 
+    sudo debconf-set-selections <<< "phpmyadmin phpmyadmin/dbconfig-install boolean true" # Configure database for phpmyadmin with dbconfig-common && 
+    sudo debconf-set-selections <<< "phpmyadmin phpmyadmin/mysql/app-pass password 'password'" # Set MySQL application password for phpmyadmin && 
+    sudo debconf-set-selections <<< "phpmyadmin phpmyadmin/app-password-confirm password 'password'" # Confirm application password && 
+    sudo debconf-set-selections <<< "phpmyadmin phpmyadmin/internal/skip-preseed boolean true" && 
+    DEBIAN_FRONTEND=noninteractive sudo apt -qy install phpmyadmin && 
+    printf "\nOpen an internet browser (e.g. Chrome) and go to \e[3;4;33mhttp://$(dig +short myip.opendns.com @resolver1.opendns.com)/phpmyadmin\e[0m - You should see the phpMyAdmin login page. admin/password\n"
+    ```
+
+## Resources 
+
+- [Tutorial Republic PHP MySQL Login System](https://www.tutorialrepublic.com/php-tutorial/php-mysql-login-system.php)
+- [Digital Ocean How to Install and Secure phpMyAdmin on Ubuntu 18.04](https://www.digitalocean.com/community/tutorials/how-to-install-and-secure-phpmyadmin-on-ubuntu-18-04)
