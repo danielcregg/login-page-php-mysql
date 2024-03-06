@@ -1,91 +1,100 @@
 # Add a Login Page to your website via PHP and MySQL Login System 
 
-1. SSH into your LAMP server  
+1. SSH into your LAMP server. Use the following command, replacing `your_username` and `your_server_ip` with your actual username and server IP address:
 
-2. Create a new DB called auth which will store the user table. This command has no output. 
+    ```bash
+    ssh your_username@your_server_ip
+    ```
+
+2. Create a new DB called auth. This DB will store the user table. 
 
    ```bash
    sudo mysql -u root -Bse "CREATE DATABASE IF NOT EXISTS auth;"
    ```
 
-3. Create a new user called newuser and grant all privileges on all DBs. This command has no output. 
+3. Create a new user called admin with password = 'password' and grant admin user all privileges on all DBs.
 
    ```bash
    sudo mysql -u root -Bse "CREATE USER IF NOT EXISTS admin@localhost IDENTIFIED BY 'password';GRANT ALL PRIVILEGES ON *.* TO admin@localhost;FLUSH PRIVILEGES;"
    ```
 
-4. Remove any old login and download my login code example from GitHub into /var/www/html/login:  
+4. Remove any old login:
 
-   ```bash
-   sudo rm -rf /var/www/html/login 
-   sudo git clone https://github.com/danielcregg/php-login-script.git /var/www/html/login
-   ```
+    ```bash
+    sudo rm -rf /var/www/html/login 
+    ```
 
-5. Create a user's table to store users: 
+5. Download the login code example from GitHub into /var/www/html/login:
+
+    ```bash
+    sudo git clone https://github.com/danielcregg/php-login-script.git /var/www/html/login
+    ```
+
+6. Create a user's table to store users: 
 
    ```bash
    sudo mysql -u root auth < /var/www/html/login/database.sql
    ```
 
-6. Install required PHP module:  
+7. Install required PHP module:  
 
    ```bash
    sudo apt -y install php-mysql
    ```
 
-7. Restart Apache to pick up changes: 
+8. Restart Apache to pick up changes: 
 
    ```bash
    sudo service apache2 restart
    ```
 
-8. Check your /var/www/html folder. Make sure you have an index.php file in there. If you have an index.html file rename it to index.php. If you have both then delete index.html.  
+9. Check your /var/www/html folder. Make sure you have an index.php file in there. If you have an index.html file rename it to index.php. If you have both then delete index.html.  
 
-9. Copy the contents of the login folder to your hosted directory and delete the login folder: 
+10. Copy the contents of the login folder to your hosted directory and delete the login folder:  
 
    ```bash
    sudo mv /var/www/html/index.php /var/www/html/home.php
    ```
-
-10. Add a logout button to the footer of the home.php page 
+   
+11. Add a logout button to the footer of the home.php page 
 
     ```bash
     sudo sed -i '/<\/body>/i\    <footer>\n      <a href="logout.php" style="font-size: 18px; color: red; text-decoration: none;">Logout</a>\n    </footer>' /var/www/html/home.php
     ```
 
-11. Copy contents of login folder to /var/www/html 
+12. Copy contents of login folder to /var/www/html 
 
     ```bash
     sudo cp -R /var/www/html/login/* /var/www/html/
     ```
 
-12. Remove empty login folder 
+13. Remove empty login folder 
 
     ```bash
     sudo rm -rf /var/www/html/login
     ```
 
-13. Restart apache to pick up changes. 
+14. Restart apache to pick up changes. 
 
     ```bash
     sudo service apache2 restart
     ```
 
-14. Restart mysql to pick up change to database. 
+15. Restart mysql to pick up change to database. 
 
     ```bash
     sudo service mysql restart
     ```
 
-15. Find YourIP by running the following command in the terminal: 
+16. Find YourIP by running the following command in the terminal: 
 
     ```bash
     dig +short myip.opendns.com @resolver1.opendns.com
     ```
 
-16. Open a browser and put your IP in a new tab. You should see a login page. Register and log in. You should get you your home page (your old index.php page).   
+17. Open a browser and put your IP in a new tab. You should see a login page. Register and log in. You should get you your home page (your old index.php page).   
 
-17. Install phpMyAdmin – Copy all following code and run 
+18. Install phpMyAdmin – Copy all following code and run 
 
     ```bash
     sudo mysql -Bse "CREATE DATABASE IF NOT EXISTS auth;CREATE USER IF NOT EXISTS admin@localhost IDENTIFIED BY 'password';GRANT ALL PRIVILEGES ON *.* TO admin@localhost;FLUSH PRIVILEGES;" && 
