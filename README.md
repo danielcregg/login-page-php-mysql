@@ -52,10 +52,10 @@
 
 10. Copy the contents of the login folder to your hosted directory and delete the login folder:  
 
-   ```bash
-   sudo mv /var/www/html/index.php /var/www/html/home.php
-   ```
-   
+    ```bash
+    sudo mv /var/www/html/index.php /var/www/html/home.php
+    ```
+
 11. Add a logout button to the footer of the home.php page 
 
     ```bash
