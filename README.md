@@ -124,8 +124,11 @@
     sudo debconf-set-selections <<< "phpmyadmin phpmyadmin/mysql/app-pass password 'password'" &&
     # Confirm application password
     sudo debconf-set-selections <<< "phpmyadmin phpmyadmin/app-password-confirm password 'password'" &&
+    # Set a debconf setting for phpmyadmin. This is used to pre-answer a configuration question for the phpmyadmin package.
     sudo debconf-set-selections <<< "phpmyadmin phpmyadmin/internal/skip-preseed boolean true" && 
-    DEBIAN_FRONTEND=noninteractive sudo apt -qy install phpmyadmin && 
+    # Install phpmyadmin in a non-interactive mode (i.e., without asking any questions during installation).
+    DEBIAN_FRONTEND=noninteractive sudo apt -qy install phpmyadmin &&
+    # Print usage instructions to terminal
     printf "\nOpen an internet browser (e.g. Chrome) and go to \e[3;4;33mhttp://$(dig +short myip.opendns.com @resolver1.opendns.com)/phpmyadmin\e[0m - You should see the phpMyAdmin login page. admin/password\n"
     ```
 
