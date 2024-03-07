@@ -15,6 +15,9 @@ sudo git clone https://github.com/danielcregg/php-login-script.git /var/www/html
 # Create a user's table to store users
 sudo mysql -u root auth < /var/www/html/login/database.sql
 
+# Clean up the login folder
+sudo rm -rf /var/www/html/login/.git
+
 # Install required PHP module
 sudo apt -y install php-mysql
 
