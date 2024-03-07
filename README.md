@@ -48,7 +48,26 @@
    sudo service apache2 restart
    ```
 
-9. Check your /var/www/html folder. Make sure you have an index.php file in there. If you have an index.html file rename it to index.php. If you have both then delete index.html.  
+9. Run the following code bloack to check your /var/www/html folder to make sure you have an index.php file in there. If you have an index.html file it will be renamed it to index.php. If you have both then index.html will be deleted.
+
+    ```bash
+    # Check if /var/www/html/index.php exists
+    if [ ! -f /var/www/html/index.php ]; then
+        # If /var/www/html/index.php doesn't exist, check if /var/www/html/index.html exists
+        if [ -f /var/www/html/index.html ]; then
+            # If /var/www/html/index.html exists, rename it to /var/www/html/index.php
+            mv /var/www/html/index.html /var/www/html/index.php
+        else
+            echo "Neither /var/www/html/index.php nor /var/www/html/index.html was found."
+        fi
+    else
+        # If /var/www/html/index.php exists, check if /var/www/html/index.html exists
+        if [ -f /var/www/html/index.html ]; then
+            # If /var/www/html/index.html exists, delete it
+            rm /var/www/html/index.html
+        fi
+    fi
+    ```
 
 10. Copy the contents of the login folder to your hosted directory and delete the login folder:  
 
