@@ -18,7 +18,7 @@
    sudo mysql -u root -Bse "CREATE USER IF NOT EXISTS admin@localhost IDENTIFIED BY 'password';GRANT ALL PRIVILEGES ON *.* TO admin@localhost;FLUSH PRIVILEGES;"
    ```
 
-4. Remove any old login:
+4. Remove any old login folders:
 
     ```bash
     sudo rm -rf /var/www/html/login 
