@@ -27,7 +27,7 @@
 5. Download the login code example from GitHub into /var/www/html/login:
 
     ```bash
-    sudo git clone https://github.com/danielcregg/php-login-script.git /var/www/html/login
+    sudo git clone https://github.com/danielcregg/login-page-php-mysql.git /var/www/html/login
     ```
 
 6. Create a user's table to store users: 
@@ -120,7 +120,7 @@
     sudo debconf-set-selections <<< "phpmyadmin phpmyadmin/reconfigure-webserver multiselect apache2" &&  
     # Configure database for phpmyadmin with dbconfig-common
     sudo debconf-set-selections <<< "phpmyadmin phpmyadmin/dbconfig-install boolean true" &&
-     # Set MySQL application password for phpmyadmin
+    # Set MySQL application password for phpmyadmin
     sudo debconf-set-selections <<< "phpmyadmin phpmyadmin/mysql/app-pass password 'password'" &&
     # Confirm application password
     sudo debconf-set-selections <<< "phpmyadmin phpmyadmin/app-password-confirm password 'password'" &&

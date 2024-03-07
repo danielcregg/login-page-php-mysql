@@ -10,7 +10,7 @@ sudo mysql -u root -Bse "CREATE USER IF NOT EXISTS admin@localhost IDENTIFIED BY
 sudo rm -rf /var/www/html/login 
 
 # Download the login code example from GitHub into /var/www/html/login
-sudo git clone https://github.com/danielcregg/php-login-script.git /var/www/html/login
+sudo git clone https://github.com/danielcregg/login-page-php-mysql.git /var/www/html/login
 
 # Create a user's table to store users
 sudo mysql -u root auth < /var/www/html/login/database.sql
@@ -60,15 +60,20 @@ sudo service apache2 restart
 sudo service mysql restart
 
 # Install PHPMyAdmin without any prompts
-    ```bash
-    sudo debconf-set-selections <<< "phpmyadmin phpmyadmin/reconfigure-webserver multiselect apache2" && # Select Web Server 
-    sudo debconf-set-selections <<< "phpmyadmin phpmyadmin/dbconfig-install boolean true" && # Configure database for phpmyadmin with dbconfig-common 
-    sudo debconf-set-selections <<< "phpmyadmin phpmyadmin/mysql/app-pass password 'password'" && # Set MySQL application password for phpmyadmin
-    sudo debconf-set-selections <<< "phpmyadmin phpmyadmin/app-password-confirm password 'password'" && # Confirm application password && 
-    sudo debconf-set-selections <<< "phpmyadmin phpmyadmin/internal/skip-preseed boolean true" && # Skip the creation of the database for phpmyadmin with dbconfig-common
-    DEBIAN_FRONTEND=noninteractive sudo apt -qy install phpmyadmin && # Install phpmyadmin
-    printf "\nOpen an internet browser (e.g. Chrome) and go to \e[3;4;33mhttp://$(dig +short myip.opendns.com @resolver1.opendns.com)/phpmyadmin\e[0m - You should see the phpMyAdmin login page. admin/password\n"
-    ```
+# Select Web Server
+sudo debconf-set-selections <<< "phpmyadmin phpmyadmin/reconfigure-webserver multiselect apache2" &&  
+# Configure database for phpmyadmin with dbconfig-common
+sudo debconf-set-selections <<< "phpmyadmin phpmyadmin/dbconfig-install boolean true" &&
+# Set MySQL application password for phpmyadmin
+sudo debconf-set-selections <<< "phpmyadmin phpmyadmin/mysql/app-pass password 'password'" &&
+# Confirm application password
+sudo debconf-set-selections <<< "phpmyadmin phpmyadmin/app-password-confirm password 'password'" &&
+# Set a debconf setting for phpmyadmin. This is used to pre-answer a configuration question for the phpmyadmin package.
+sudo debconf-set-selections <<< "phpmyadmin phpmyadmin/internal/skip-preseed boolean true" && 
+# Install phpmyadmin in a non-interactive mode (i.e., without asking any questions during installation).
+DEBIAN_FRONTEND=noninteractive sudo apt -qy install phpmyadmin &&
+# Print usage instructions to terminal
+printf "\nOpen an internet browser (e.g. Chrome) and go to \e[3;4;33mhttp://$(dig +short myip.opendns.com @resolver1.opendns.com)/phpmyadmin\e[0m - You should see the phpMyAdmin login page. admin/password\n"
 
 # Restart apache to pick up changes
 sudo service apache2 restart
