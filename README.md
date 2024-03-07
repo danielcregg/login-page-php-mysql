@@ -113,14 +113,17 @@
 
 17. Open a browser and put your IP in a new tab. You should see a login page. Register and log in. You should get you your home page (your old index.php page).   
 
-18. Install phpMyAdmin – Copy all following code and run 
+18. Install phpMyAdmin without user interaction – Copy all following code as one block and run together 
 
     ```bash
-    sudo mysql -Bse "CREATE DATABASE IF NOT EXISTS auth;CREATE USER IF NOT EXISTS admin@localhost IDENTIFIED BY 'password';GRANT ALL PRIVILEGES ON *.* TO admin@localhost;FLUSH PRIVILEGES;" && 
-    sudo debconf-set-selections <<< "phpmyadmin phpmyadmin/reconfigure-webserver multiselect apache2" # Select Web Server && 
-    sudo debconf-set-selections <<< "phpmyadmin phpmyadmin/dbconfig-install boolean true" # Configure database for phpmyadmin with dbconfig-common && 
-    sudo debconf-set-selections <<< "phpmyadmin phpmyadmin/mysql/app-pass password 'password'" # Set MySQL application password for phpmyadmin && 
-    sudo debconf-set-selections <<< "phpmyadmin phpmyadmin/app-password-confirm password 'password'" # Confirm application password && 
+    # Select Web Server
+    sudo debconf-set-selections <<< "phpmyadmin phpmyadmin/reconfigure-webserver multiselect apache2" &&  
+    # Configure database for phpmyadmin with dbconfig-common
+    sudo debconf-set-selections <<< "phpmyadmin phpmyadmin/dbconfig-install boolean true" &&
+     # Set MySQL application password for phpmyadmin
+    sudo debconf-set-selections <<< "phpmyadmin phpmyadmin/mysql/app-pass password 'password'" &&
+    # Confirm application password
+    sudo debconf-set-selections <<< "phpmyadmin phpmyadmin/app-password-confirm password 'password'" &&
     sudo debconf-set-selections <<< "phpmyadmin phpmyadmin/internal/skip-preseed boolean true" && 
     DEBIAN_FRONTEND=noninteractive sudo apt -qy install phpmyadmin && 
     printf "\nOpen an internet browser (e.g. Chrome) and go to \e[3;4;33mhttp://$(dig +short myip.opendns.com @resolver1.opendns.com)/phpmyadmin\e[0m - You should see the phpMyAdmin login page. admin/password\n"
