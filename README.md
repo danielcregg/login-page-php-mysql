@@ -48,7 +48,7 @@
    sudo service apache2 restart
    ```
 
-9. Run the following code bloack to check your /var/www/html folder to make sure you have an index.php file in there. If you have an index.html file it will be renamed it to index.php. If you have both then index.html will be deleted.
+9. Run the following code block to check your /var/www/html folder to make sure you have an index.php file in there. If you have an index.html file it will be renamed it to index.php. If you have both then index.html will be deleted.
 
     ```bash
     # Check if /var/www/html/index.php exists
